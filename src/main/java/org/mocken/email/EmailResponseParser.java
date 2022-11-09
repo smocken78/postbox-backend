@@ -1,4 +1,4 @@
-package org.mocken.s3;
+package org.mocken.email;
 
 import java.io.InputStream;
 import java.util.Base64;

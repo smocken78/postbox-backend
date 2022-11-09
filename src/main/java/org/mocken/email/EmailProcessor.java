@@ -1,4 +1,4 @@
-package org.mocken.s3;
+package org.mocken.email;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -6,9 +6,10 @@ import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mocken.communication.MailSender;
 import org.mocken.database.statements.SQLStatementsPostbox;
+import org.mocken.s3.S3PostboxWriter;
 
-import de.congstar.communication.MailSender;
 import jakarta.mail.Address;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;

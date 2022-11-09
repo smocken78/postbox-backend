@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mocken.database.connectors.ConnectionManager;
+import org.mocken.email.FileMetaData;
 import org.mocken.exception.ApplicationException;
-import org.mocken.s3.FileMetaData;
 
 
 

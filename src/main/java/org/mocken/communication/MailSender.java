@@ -1,4 +1,4 @@
-package de.congstar.communication;
+package org.mocken.communication;
 
 import java.util.Properties;
 

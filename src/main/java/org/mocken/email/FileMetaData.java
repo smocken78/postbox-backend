@@ -1,4 +1,4 @@
-package org.mocken.s3;
+package org.mocken.email;
 
 public class FileMetaData {
 	private final String filename;
