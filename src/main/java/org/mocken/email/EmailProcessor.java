@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mocken.communication.MailSender;
+import org.mocken.configuration.ConfigurationHolder3;
 import org.mocken.database.statements.SQLStatementsPostbox;
 import org.mocken.s3.S3PostboxWriter;
 
@@ -18,6 +19,7 @@ import jakarta.mail.internet.MimeMultipart;
 public class EmailProcessor {
 	
 	private Logger logger = LogManager.getLogger(this.getClass());
+	private String notificationHeaderName = ConfigurationHolder3.getConfiguration().getString("postbox.header.notification", "X-Notify");
 	
 	public void run(String fname, String message) {
 		
@@ -41,8 +43,7 @@ public class EmailProcessor {
 					logger.warn("Exception: ",e);
 				}
 			}
-			else {
-				
+			else {	
 				try {
 					MimeMultipart mp = (MimeMultipart)mimeMessage.getContent();
 					logger.debug("MESSAGE content 20 signs: " +  ((String)mp.getBodyPart(0).getContent()).substring(0, 20));
@@ -65,7 +66,7 @@ public class EmailProcessor {
 			SQLStatementsPostbox sql = new SQLStatementsPostbox();
 			sql.addEntry(metaData);
 			
-			if (mimeMessage.getHeader("X-Congstar-Notify")!=null &&	Boolean.parseBoolean(mimeMessage.getHeader("X-Congstar-Notify")[0].trim()))
+			if (mimeMessage.getHeader(notificationHeaderName)!=null &&	Boolean.parseBoolean(mimeMessage.getHeader(notificationHeaderName)[0].trim()))
 			{
 				MailSender email = new MailSender();
 				email.email(ias[0].toString());
