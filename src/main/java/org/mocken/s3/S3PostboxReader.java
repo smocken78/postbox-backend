@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mocken.configuration.ConfigurationHolder3;
 import org.mocken.exception.ApplicationException;
 
 import com.amazonaws.AmazonServiceException;
@@ -23,20 +24,18 @@ public class S3PostboxReader {
 	}
 
 	private Logger logger = LogManager.getLogger(this.getClass());
+	private String bucket = ConfigurationHolder3.getConfiguration().getString("postbox.s3.bucket","congo-tuad-be-voice");
+	private String s3URL = ConfigurationHolder3.getConfiguration().getString("postbox.s3.url","https://s3-internal.nicotuadev.de");
+	private String accessKey = ConfigurationHolder3.getConfiguration().getString("postbox.s3.accessKey","TDCNCLW7GICXOR9JTNTM");
+	private String secretKey = ConfigurationHolder3.getConfiguration().getString("postbox.s3.secretKey","qQ/BWyY5N+hmJeEagXOy+Euv9q6J1Z6IyivGDqP4");
+
 	private AmazonS3 s3Client = null;
 	
 	 
 	public S3Object getFile(String objectName) throws IOException, ApplicationException {
 	
-		String bucket = "congo-tuad-be-voice";
-		String s3URL = "https://s3-internal.nicotuadev.de";
-		String accessKey = "TDCNCLW7GICXOR9JTNTM";
-		String secretKey = "qQ/BWyY5N+hmJeEagXOy+Euv9q6J1Z6IyivGDqP4";
 
 		S3Object s3object = null;
-
-		if (bucket==null || s3URL==null || accessKey==null || secretKey==null)
-			throw new ApplicationException("All s3Entities must be set");
 		
 		AWSCredentials credentials = new BasicAWSCredentials(
 			accessKey,
