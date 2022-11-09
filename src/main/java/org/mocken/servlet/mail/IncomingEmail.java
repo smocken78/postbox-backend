@@ -1,4 +1,4 @@
-package org.mocken.servlet;
+package org.mocken.servlet.mail;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns="/incomingEMail")
+@WebServlet(urlPatterns="/api/incomingEMail")
 public class IncomingEmail extends HttpServlet {
 
 	private static final long serialVersionUID = 1717947941937912111L;
