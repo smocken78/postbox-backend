@@ -1,14 +1,10 @@
 import { html, render } from "../lib/lit-html-module.js";
-import { navigationViewheight } from "../lib/defaults.js";
 
 
 class PostboxClient extends HTMLElement {
   
   constructor() {
     super();
-
-    this.heightCal = (100 - navigationViewheight);
-
   }
   
   onresize ()
@@ -23,6 +19,7 @@ class PostboxClient extends HTMLElement {
   async connectedCallback() {
     render (this.view(),this);
     this.getEntities();
+    
   }
   
   
@@ -71,7 +68,7 @@ class PostboxClient extends HTMLElement {
 		catch {
 			content = `Nix da`;
 		}
-			  
+  
 	     this.innerHTML ="";
 	     this.innerHTML = content;
 	

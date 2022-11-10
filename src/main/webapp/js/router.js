@@ -7,7 +7,7 @@ const routerTarget = document.querySelector('#router-target');
 const routes = [
   {
     path: '/',
-    component: 'postbox-main',
+    component: 'postbox-client',
     action: async () => { await import("../webcomponents/postbox-client.js") }
   }
 ];
