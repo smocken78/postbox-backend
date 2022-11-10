@@ -18,7 +18,7 @@ public class JWTTokenEncoder {
 	
 	public String getJWTToken(User user){
 		
-		logger.info("Trying to build JWT token for user {}",user.getUserId());
+		logger.info("Trying to build JWT token for user {}",user.getEmail());
 		
 		String password = ConfigurationHolder3.getConfiguration().getString("appconfig.jwt.secretKey", "LJS37842983829!jls.!");
 		

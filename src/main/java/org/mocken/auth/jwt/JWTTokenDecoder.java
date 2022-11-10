@@ -23,7 +23,10 @@ public class JWTTokenDecoder  {
 		
 		if (json==null)
 			throw new AuthenticationException("Unauthorized");
-			user = new User(json);
+			user = new User(json.getString("email"));
+			user.setFirstName(json.getString("first_name"));
+			user.setLastName(user.getLastName());
+			user.setUsername(user.getUsername());
 			return user;
 	}
 
