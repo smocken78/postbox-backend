@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/',
     component: 'postbox-main',
-    action: async () => { await import("../webcomponents/postbox-main.js") }
+    action: async () => { await import("../webcomponents/postbox-client.js") }
   }
 ];
 

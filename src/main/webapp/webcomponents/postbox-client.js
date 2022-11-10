@@ -122,4 +122,4 @@ class PostboxClient extends HTMLElement {
 }
 
 
-customElements.define("postbox-main", PostboxClient);
+customElements.define("postbox-client", PostboxClient);
