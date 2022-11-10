@@ -12,8 +12,6 @@ import org.mocken.database.connectors.ConnectionManager;
 import org.mocken.email.FileMetaData;
 import org.mocken.exception.ApplicationException;
 
-
-
 public class SQLStatementsPostbox {
 
 	private final ConnectionManager manager;
@@ -36,10 +34,11 @@ public class SQLStatementsPostbox {
 			Connection con = manager.getConnection();
 			try {
 
-				PreparedStatement ps = con.prepareStatement("insert into postbox_demo (email, filename,title) values (?,?,?)");
+				PreparedStatement ps = con.prepareStatement("insert into postbox_metadata (email, filename,subject,preview) values (?,?,?,?)");
 				ps.setString(1, metaData.getCustomerEmail());
 				ps.setString(2, metaData.getFilename());
-				ps.setString(3, metaData.getTitle());
+				ps.setString(3, metaData.getSubject());
+				ps.setString(4, metaData.getPreviewContent());
 				ps.execute();
 				ps.close();
 				if (!con.getAutoCommit())
@@ -48,7 +47,7 @@ public class SQLStatementsPostbox {
 			}
 			
 			catch (Exception e) {
-				logger.error("Something went wrong while adding sms", e);
+				logger.error("Something went wrong while adding metadata", e);
 
 			} 
 			finally {
@@ -65,18 +64,19 @@ public class SQLStatementsPostbox {
 			Connection con = manager.getConnection();
 			try {
 
-				PreparedStatement ps = con.prepareStatement("select * from postbox_demo where email = ? order by insertation_dt desc");
+				PreparedStatement ps = con.prepareStatement("select * from postbox_metadata where email = ? order by insertation_dt desc");
 				ps.setString(1, email.trim());
 				ResultSet rs = ps.executeQuery();
 				while (rs.next()) {
 					JSONObject json = new JSONObject();
 					json.put("email", rs.getString("email"));
 					json.put("filename", rs.getString("filename"));
-					json.put("title", rs.getObject("title")!=null?rs.getString("title"):"Subject");
+					json.put("subject", rs.getObject("subject")!=null?rs.getString("subject"):JSONObject.NULL);
+					json.put("preview", rs.getObject("preview")!=null?rs.getString("preview"):JSONObject.NULL);
+					json.put("is_read", rs.getBoolean("is_read"));
 					json.put("insertation_dt", rs.getTimestamp("insertation_dt").toInstant().toEpochMilli());
 					if (rs.getObject("document_dt")!=null)
 						json.put("document_dt", rs.getTimestamp("document_dt").toInstant().toEpochMilli());
-					json.put("title", rs.getObject("title")!=null?rs.getString("title"):"Subject");
 					jar.put(json);
 				}
 				rs.close();
@@ -85,7 +85,7 @@ public class SQLStatementsPostbox {
 			}
 			
 			catch (Exception e) {
-				logger.error("Something went wrong while adding sms", e);
+				logger.error("Something went wrong while gathering metadata", e);
 
 			} 
 			finally {
@@ -103,7 +103,7 @@ public class SQLStatementsPostbox {
 			Connection con = manager.getConnection();
 			try {
 
-				PreparedStatement ps = con.prepareStatement("select 1 from postbox_demo where email = ? and filename = ?");
+				PreparedStatement ps = con.prepareStatement("select 1 from postbox_metadata where email = ? and filename = ?");
 
 				ps.setString(1, email);
 				ps.setString(2, filename);
@@ -117,7 +117,7 @@ public class SQLStatementsPostbox {
 			}
 			
 			catch (Exception e) {
-				logger.error("Something went wrong while adding sms", e);
+				logger.error("Something went while validating getFile", e);
 
 			} 
 			finally {

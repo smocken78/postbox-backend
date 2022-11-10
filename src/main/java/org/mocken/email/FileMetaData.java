@@ -3,9 +3,9 @@ package org.mocken.email;
 public class FileMetaData {
 	private final String filename;
 	private final int documentTypeId;
-	private String contentType = null;
 	private String customerEmail = null;
-	private String title = null;
+	private String subject = null;
+	private String previewContent = null;
 	private long defaultDeletionEpochMS = -1;
 	private long documentDateEpochMS = -1;
 
@@ -46,13 +46,6 @@ public class FileMetaData {
 		return  customerEmail != null ;
 	}
 
-	public String getContentType() {
-		return contentType;
-	}
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
 
 	public long getDocumentDateEpochMS() {
 		return documentDateEpochMS;
@@ -62,11 +55,19 @@ public class FileMetaData {
 		this.documentDateEpochMS = documentDateEpochMS;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getSubject() {
+		return subject;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getPreviewContent() {
+		return previewContent;
+	}
+
+	public void setPreviewContent(String previewContent) {
+		this.previewContent = previewContent;
 	}
 }

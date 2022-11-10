@@ -32,12 +32,11 @@ public class EmailProcessor {
 			MimeMessage mimeMessage = new MimeMessage(s, is);
 			Address [] ias = mimeMessage.getAllRecipients();
 			metaData.setCustomerEmail(ias[0].toString());
-			metaData.setTitle(mimeMessage.getSubject());
+			metaData.setSubject(mimeMessage.getSubject());
 			metaData.setDocumentDateEpochMS(System.currentTimeMillis());
-			metaData.setContentType("message/rfc822");
 			if (mimeMessage.getContentType().startsWith("text")) {
 				try {
-					logger.debug("MESSAGE content 20 signs: " +  ((String)mimeMessage.getContent()).substring(0, 20));
+					metaData.setPreviewContent( ((String)mimeMessage.getContent()).substring(0, 80));
 				}
 				catch (Exception e) {
 					logger.warn("Exception: ",e);
@@ -46,7 +45,10 @@ public class EmailProcessor {
 			else {	
 				try {
 					MimeMultipart mp = (MimeMultipart)mimeMessage.getContent();
-					logger.debug("MESSAGE content 20 signs: " +  ((String)mp.getBodyPart(0).getContent()).substring(0, 20));
+					for (int i=0;i<mp.getCount();i++) {
+						if (mp.getContentType().startsWith("text"))
+							metaData.setPreviewContent( ((String)mimeMessage.getContent()).substring(0, 80));
+					}
 				}
 				catch (Exception e) {
 					logger.warn("Exception: ",e);
