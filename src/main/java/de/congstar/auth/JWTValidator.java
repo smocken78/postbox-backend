@@ -10,6 +10,7 @@ import io.fusionauth.jwt.hmac.HMACVerifier;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mocken.configuration.ConfigurationHolder3;
 import org.mocken.exception.ApplicationException;
 import org.mocken.exception.AuthenticationException;
 import org.mocken.user.User;
@@ -33,7 +34,6 @@ public class JWTValidator {
 				        json.path("first_name").asText(),
 				        json.path("last_name").asText());
 		
-		json.path("groups").forEach(g -> user.addGroup(g.asText()));
 		
 		request.setAttribute("user", user);	
 		return decrypted.isRecreateToken();

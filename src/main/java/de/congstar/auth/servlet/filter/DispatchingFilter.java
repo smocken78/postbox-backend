@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 import org.mocken.configuration.ConfigurationHolder3;
 import org.mocken.exception.ApplicationException;
 import org.mocken.exception.AuthenticationException;
+import org.mocken.user.User;
 
 
 /**

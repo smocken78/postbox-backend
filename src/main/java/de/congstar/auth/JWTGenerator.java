@@ -13,7 +13,6 @@ import org.apache.logging.log4j.Logger;
 import org.mocken.configuration.ConfigurationHolder3;
 import org.mocken.user.User;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JWTGenerator  {
 
