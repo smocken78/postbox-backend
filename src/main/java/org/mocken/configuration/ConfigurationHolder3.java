@@ -4,11 +4,9 @@ import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.configuration2.BaseHierarchicalConfiguration;
-import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.builder.ConfigurationBuilder;
 import org.apache.commons.configuration2.builder.FileBasedBuilderParametersImpl;
 import org.apache.commons.configuration2.builder.ReloadingDetectorFactory;
-import org.apache.commons.configuration2.builder.ReloadingFileBasedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.combined.ReloadingCombinedConfigurationBuilder;
 import org.apache.commons.configuration2.builder.fluent.Parameters;
 import org.apache.commons.configuration2.convert.DefaultListDelimiterHandler;
