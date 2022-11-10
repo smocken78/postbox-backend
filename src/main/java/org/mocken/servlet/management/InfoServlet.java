@@ -13,32 +13,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns={"/management/info"})
-public class ManagementInfoServlet extends HttpServlet{
+@WebServlet(urlPatterns={"/management/info","/management/build"})
+public class InfoServlet extends HttpServlet{
 
 	private static final long serialVersionUID = -2082538637502792137L;
 	
 
 	public void service (HttpServletRequest request, HttpServletResponse response) {
 		
-		String header = request.getHeader("secret");
-		String parameter = request.getParameter("secret");
-		
-		if (header == null && parameter == null) {
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			return;
-		}
-		else {
-			String secret = header!=null?header:parameter;
-			if (!secret.matches("smocken")) {
-				response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-				return;
-			}
-		}
-		
 		try {
 			ServletContext application = getServletConfig().getServletContext();
 			Manifest mf = new Manifest(application.getResourceAsStream("/META-INF/MANIFEST.MF"));
+			JSONObject enclosing = new JSONObject();
 			JSONObject json = new JSONObject();
 			
 			Attributes attr = mf.getMainAttributes();
@@ -53,7 +39,7 @@ public class ManagementInfoServlet extends HttpServlet{
 			json.put("revision", attr.getValue("git-revision-id"));
 			json.put("branch", attr.getValue("git-branch"));
 
-			response.setContentType("application/json");
+			enclosing.put("build", json);
 			PrintWriter wr = response.getWriter();
 			wr.write(json.toString());
 			wr.close();
@@ -63,4 +49,3 @@ public class ManagementInfoServlet extends HttpServlet{
 		}
 	}
 }
-
