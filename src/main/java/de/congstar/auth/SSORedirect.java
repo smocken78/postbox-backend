@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SSORedirect {
 	
 	private Logger logger = LogManager.getLogger();
-	private final String appname = ConfigurationHolder3.getConfiguration().getString("appconfigitems.sso.appname", "postbox");
+	private final String appname = ConfigurationHolder3.getConfiguration().getString("appconfig.sso.appname", "postbox");
 	
 	public void getRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
@@ -23,14 +23,14 @@ public class SSORedirect {
 			
 		if (success==null) {
 			logger.warn("Request URL not set. Setting default request URL");
-			success = ConfigurationHolder3.getConfiguration().getString("url.success","http://cis.congstar.local/csmp/overview.html");
+			success = ConfigurationHolder3.getConfiguration().getString("appconfig.sso.success","http://cis.congstar.local/csmp/overview.html");
 		}
 			
 		if (!request.getScheme().matches("https"))
 			success=success.replaceFirst("http", "https");
 			
 		String url = ConfigurationHolder3.getConfiguration().getString(
-				"url.sso", "https://sso.congstar.net/sso/login");
+				"appconfig.sso.url", "https://sso.congstar.net/sso/login");
 
 		if (queryString!=null && queryString.length()>2)
 			success+="?"+queryString;
