@@ -19,7 +19,7 @@ public class SQLStatementsPostbox {
 
 	public SQLStatementsPostbox() throws ApplicationException {
 		try {
-			manager = new ConnectionManager("aax");
+			manager = new ConnectionManager("postbox");
 			
 		} catch (Exception e) {
 			logger.error("Could not get database connection to aax DB", e);
