@@ -18,7 +18,7 @@ public class LoginStatements {
 
 	public LoginStatements() {
 		try {
-			cm = new ConnectionManager("msports");
+			cm = new ConnectionManager("postbox");
 		} 
 		catch (NamingException e) {
 			// TODO Auto-generated catch block
