@@ -22,14 +22,11 @@ class PostboxClient extends HTMLElement {
 
   async connectedCallback() {
     render (this.view(),this);
+    this.getEntities();
   }
   
   
-	async getEntities() {
-		document.querySelector("#result").innerHTML = 
-		`<div class="spinner-border" role="status">
-		  <span class="sr-only">Loading...</span>
-		</div>`;	
+  async getEntities() {
 		const response = await fetch (`/postbox/service/postboxEntities`);
 		let files; 
 		let content;
@@ -75,24 +72,38 @@ class PostboxClient extends HTMLElement {
 			content = `Nix da`;
 		}
 			  
-	     document.querySelector("#result").innerHTML = '';
-	     document.querySelector("#result").innerHTML = content;
+	     this.innerHTML ="";
+	     this.innerHTML = content;
 	
-	}  
+	}
+	
+	async openEmail (file) {
+
+		document.querySelector("#msg").innerHTML = 
+		`<div class="spinner-border" role="status">
+		  <span class="sr-only">Loading...</span>
+		</div>`;
+			const response = await fetch ('/postbox/service/postboxFile?filename='+file);
+			const body = await response.text();
+		     
+	        document.querySelector("#msg").innerHTML = body;
+		  
+	};  
   
     
   view() {
      return html`
      
      <div class="row g-1 mt-1">
-        <div class="col-md-9">
-            <input id="searchField" placeholder="Search..." class="form-control">
+        <div class="col-md-5">
         </div>
         
-        <div class="col-md-3">
-            <button type="submit" class="search btn btn-primary w-100 text-uppercase" @click=${() => {
-                 this.getCustomerForVoucher(searchField.value);
-               }}>Search</button>
+        <div class="col-md-2">
+            <div class="spinner-border" role="status">
+			  <span class="sr-only">Loading...</span>
+			</div>
+        </div>
+        <div class="col-md-5">
         </div>
         
     </div>

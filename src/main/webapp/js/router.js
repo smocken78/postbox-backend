@@ -1,4 +1,4 @@
-import "../webcomponents/cff-client.js";
+import "../webcomponents/postbox-client.js";
 import { WebcomponentRouter } from "../lib/webcomponent-router.js";
 import "../lib/popper.js";
 import "../lib/bootstrap.esm.js";
