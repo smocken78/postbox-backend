@@ -14,23 +14,27 @@ import org.mocken.configuration.ConfigurationHolder3;
 
 public class EmailTemplateLoader {
 	
-	static Logger logger = LogManager.getLogger(EmailTemplateLoader.class);
+	private static EmailTemplateLoader instance;
 	private static final Timer timer = new Timer();
 	private static String NOTIFICATON_TEMPLATE = "";
 	
-	static {
-		new EmailTemplateLoader();
+	public static EmailTemplateLoader getInstance() {
+		if (instance==null)
+			instance=new EmailTemplateLoader();
+			
+		return instance;
+		
 	}
 
 	private EmailTemplateLoader() {
 		start();
 	}
 	
-	public static String getEmail() {
+	public String getEmail() {
 		return NOTIFICATON_TEMPLATE;
 	}
 	
-	public static String getSubject() {
+	public String getSubject() {
 		return "Neue Naricht in Deinem Postfach!";
 	}
 	
@@ -41,13 +45,12 @@ public class EmailTemplateLoader {
 			public void run() {
 				ThreadedLoadTemplate job = new ThreadedLoadTemplate();
 				NOTIFICATON_TEMPLATE = job.run();
-
 			}			
 			
 		}, 0, 1800000L );	
 	}
 
-	public static void destroy() {
+	public void destroy() {
 		timer.cancel();
 	}
 }
@@ -55,14 +58,15 @@ public class EmailTemplateLoader {
 
 class ThreadedLoadTemplate  {
 	
-		
+	private Logger logger = LogManager.getLogger(ThreadedLoadTemplate.class);	
 	public ThreadedLoadTemplate() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public String run() {
-		String file = ConfigurationHolder3.getConfiguration().getEncodedString("postbox.notification.template", null);
-		if (file!=null) 
+		String file = ConfigurationHolder3.getConfiguration().getString("postbox.notification.template", null);
+		if (file!=null) {
+			logger.info("Loading template from file: {}",file);
 			try {
 				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(file)),"UTF-8"));
 				String line = null;
@@ -74,8 +78,12 @@ class ThreadedLoadTemplate  {
 				return sb.toString();
 			}
 			catch (Exception e) {
-				EmailTemplateLoader.logger.error("",e);
+				logger.error("",e);
 			}
+		}
+		else {
+			logger.error("No template file found");
+		}
 
 		return "";
 		
