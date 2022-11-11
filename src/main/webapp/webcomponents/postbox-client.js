@@ -31,39 +31,45 @@ class PostboxClient extends HTMLElement {
 			files = await response.json();
 			    content = `<div class="row">
 	  			<div class="col-4">`;
-		const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+			const options = { day: "2-digit", month: "2-digit", year: "numeric" };
+			
+			if (files.length == 0) {
+				content = `Nix da`;
+			}
+			else {
+				files.forEach((item) => {
+				
+				const date = new Date(item["insertation_dt"]);
+			    const d = date.toLocaleDateString("de-DE", options);
 		
-		files.forEach((item) => {
-			
-			const date = new Date(item["insertation_dt"]);
-		    const d = date.toLocaleDateString("de-DE", options);
-	
-		    
-			content+= `
-			
-			<a href='#' id='${item["filename"]}'
-			   onclick=`;
-			
-			content+= " openEmail(this.id) ";
-			
-			content+= ` class="list-group-item list-group-item-action flex-column align-items-start">
-			    <div class="d-flex w-100 justify-content-between">
-			      <h5 class="mb-1">${item["title"]}</h5>
-			      <small>${d}</small>
-			    </div>
-			    <p class="mb-1">${item["filename"]}</p>
 			    
-			  </a>
-			  `;
+				content+= `
+				
+				<a href='#' id='${item["filename"]}'
+				   onclick=`;
+				
+				content+= " openEmail(this.id) ";
+				
+				content+= ` class="list-group-item list-group-item-action flex-column align-items-start">
+				    <div class="d-flex w-100 justify-content-between">
+				      <h5 class="mb-1">${item["title"]}</h5>
+				      <small>${d}</small>
+				    </div>
+				    <p class="mb-1">${item["filename"]}</p>
+				    
+				  </a>
+				  `;
+			
+		    });
+		      
+		      content+= `</div>
+		      <div class="col-8">
+				   <div id="msg"></div>
+				  </div>
+			   </div>`
+			}
+			
 		
-	      });
-	      
-	      content+= `</div>
-	      <div class="col-8">
-			   <div id="msg"></div>
-			  </div>
-		   </div>`
-	
 		}
 		catch {
 			content = `Nix da`;
