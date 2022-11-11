@@ -61,6 +61,7 @@ class ThreadedLoadTemplate  {
 	}
 
 	public String run() {
+		EmailTemplateLoader.logger.info("Loading template");
 		String file = ConfigurationHolder3.getConfiguration().getEncodedString("postbox.notification.template", null);
 		if (file!=null) 
 			try {

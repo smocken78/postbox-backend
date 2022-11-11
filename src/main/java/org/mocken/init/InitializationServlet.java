@@ -3,6 +3,7 @@ package org.mocken.init;
 import java.util.logging.Logger;
 
 import org.mocken.database.connectors.HikariDataSourceManager;
+import org.mocken.init.jobs.EmailTemplateLoader;
 import org.mocken.init.jobs.InitializeLog4j;
 
 import jakarta.servlet.ServletContextEvent;
@@ -26,6 +27,10 @@ public class InitializationServlet implements ServletContextListener {
 		Logger.getAnonymousLogger().info("Initializing Hikari DataSources");
 		HikariDataSourceManager.initializePools();
 		Logger.getAnonymousLogger().info("Initialized Hikari DataSources");	
+		
+		Logger.getAnonymousLogger().info("Initializing Email Template");
+		EmailTemplateLoader.getEmail();
+		Logger.getAnonymousLogger().info("Initialized Email Template");	
 
 		Logger.getAnonymousLogger().info("Finished initialization process");
 	
@@ -33,6 +38,7 @@ public class InitializationServlet implements ServletContextListener {
 	
 	public void contextDestroyed(ServletContextEvent sce) {
 		HikariDataSourceManager.shutDownPools();
+		EmailTemplateLoader.destroy();
 	}
 	
 }
