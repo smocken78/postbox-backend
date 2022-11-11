@@ -61,7 +61,7 @@ class ThreadedLoadTemplate  {
 	}
 
 	public String run() {
-		String file = ConfigurationHolder3.getConfiguration().getEncodedString("", null);
+		String file = ConfigurationHolder3.getConfiguration().getEncodedString("postbox.notification.template", null);
 		if (file!=null) 
 			try {
 				BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(new File(file)),"UTF-8"));

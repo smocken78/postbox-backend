@@ -8,10 +8,12 @@ async function  getEntities() {
 	`<div class="spinner-border" role="status">
 	  <span class="sr-only">Loading...</span>
 	</div>`;	
-	const response = await fetch (`/cst/service/postboxEntities`);
-	const files = await response.json();
-
-    let content = `<div class="row">
+	const response = await fetch (`/postbox/service/postboxEntities`);
+	let files; 
+	let content;
+	try {
+		files = await response.json();
+		    content = `<div class="row">
   			<div class="col-4">`;
 	const options = { day: "2-digit", month: "2-digit", year: "numeric" };
 	
@@ -45,6 +47,11 @@ async function  getEntities() {
 		   <div id="msg"></div>
 		  </div>
 	   </div>`
+
+	}
+	catch {
+		content = `Nix da`;
+	}
 		  
      document.querySelector("#result").innerHTML = '';
      document.querySelector("#result").innerHTML = content;
