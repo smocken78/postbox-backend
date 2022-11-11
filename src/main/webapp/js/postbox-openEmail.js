@@ -26,13 +26,16 @@ async function openEmail (file) {
             		if (matches != null && matches[1]) {
             			filename = matches[1].replace(/['"]/g, '');
             			console.log(filename);
+            			
+            			dwnld = `<a download="${filename}" href="data:application/octet-stream;base64,${item["content"]}">Download</a>`
+
 					}
 				}
 				
 				
 			 });
 		     
-	        document.querySelector("#msg").innerHTML = text;
+	        document.querySelector("#msg").innerHTML = dwnld;
 		  
 };
 
