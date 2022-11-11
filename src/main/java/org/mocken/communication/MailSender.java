@@ -29,15 +29,15 @@ import org.mocken.init.jobs.EmailTemplateLoader;
 
 public class MailSender {
 	
-	private String sender = ConfigurationHolder3.getConfiguration().getString("appconfigitems.mail.sender", "no-reply@congstar.net");
-	private String smtpHost = ConfigurationHolder3.getConfiguration().getString("appconfigitems.mail.smtp.host", "172.25.0.14");
-	private String smtpTLS = ConfigurationHolder3.getConfiguration().getString("appconfigitems.mail.smtp.starttls.enable","false");
-	private int smtpPort = ConfigurationHolder3.getConfiguration().getInt("appconfigitems.mail.smtp.port",2501);
-	private boolean smtpStarttls = ConfigurationHolder3.getConfiguration().getBoolean("appconfigitems.mail.smtp.ssl", true);
-	private int connectionTimeout = ConfigurationHolder3.getConfiguration().getInteger("appconfigitems.mail.smtp.connetiontimeout", 5000);
-	private int timeout = ConfigurationHolder3.getConfiguration().getInteger("appconfigitems.mail.smtp.timeout", 10000);
-	private String smtpUser = ConfigurationHolder3.getConfiguration().getString("appconfigitems.mail.smtp.user", "test");
-	private String smtpPassword = ConfigurationHolder3.getConfiguration().getString("appconfigitems.mail.smtp.password", "test");
+	private String sender = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.sender", "no-reply@congstar.net");
+	private String smtpHost = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.smtp.host", "172.25.0.14");
+	private String smtpTLS = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.smtp.starttls.enable","false");
+	private int smtpPort = ConfigurationHolder3.getConfiguration().getInt("appconfig.mail.smtp.port",2501);
+	private boolean smtpStarttls = ConfigurationHolder3.getConfiguration().getBoolean("appconfig.mail.smtp.ssl", true);
+	private int connectionTimeout = ConfigurationHolder3.getConfiguration().getInteger("appconfig.mail.smtp.connetiontimeout", 5000);
+	private int timeout = ConfigurationHolder3.getConfiguration().getInteger("appconfig.mail.smtp.timeout", 10000);
+	private String smtpUser = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.smtp.user", "test");
+	private String smtpPassword = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.smtp.password", "test");
 	private static Logger logger = LogManager.getLogger(MailSender.class);
 
 	public void email(String recipient) throws ApplicationException 
@@ -64,7 +64,7 @@ public class MailSender {
 				props.put("mail.smtp.connectiontimeout", connectionTimeout);
 				
 			}
-			if (ConfigurationHolder3.getConfiguration().getBoolean("appconfigitems.mail.smtp.authenticate", false)) 
+			if (ConfigurationHolder3.getConfiguration().getBoolean("appconfig.mail.smtp.authenticate", false)) 
 			{
 				props.put("mail.smtp.auth", "true");
 				logger.debug("Authentication required for Mailserver. Using user {}",smtpUser);
