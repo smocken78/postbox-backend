@@ -22,7 +22,7 @@ async function openEmail (file) {
 				}
 				else if (item["content-type"].match("application/octet-stream")) {
 					var filenameRegex = /name[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-					var matches = filenameRegex.exec(disposition);
+					var matches = filenameRegex.exec(item["content-type"]);
             		if (matches != null && matches[1]) {
             			filename = matches[1].replace(/['"]/g, '');
             			console.log(filename);
