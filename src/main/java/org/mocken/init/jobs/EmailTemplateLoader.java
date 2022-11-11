@@ -14,7 +14,6 @@ import org.mocken.configuration.ConfigurationHolder3;
 
 public class EmailTemplateLoader {
 	
-	private Logger logger = LogManager.getLogger(EmailTemplateLoader.class);
 	private static EmailTemplateLoader instance;
 	private static final Timer timer = new Timer();
 	private static String NOTIFICATON_TEMPLATE = "";
