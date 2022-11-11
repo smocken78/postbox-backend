@@ -29,7 +29,7 @@ public class InitializationServlet implements ServletContextListener {
 		Logger.getAnonymousLogger().info("Initialized Hikari DataSources");	
 		
 		Logger.getAnonymousLogger().info("Initializing Email Template");
-		EmailTemplateLoader.getEmail();
+		EmailTemplateLoader.getInstance();
 		Logger.getAnonymousLogger().info("Initialized Email Template");	
 
 		Logger.getAnonymousLogger().info("Finished initialization process");
@@ -38,7 +38,7 @@ public class InitializationServlet implements ServletContextListener {
 	
 	public void contextDestroyed(ServletContextEvent sce) {
 		HikariDataSourceManager.shutDownPools();
-		EmailTemplateLoader.destroy();
+		EmailTemplateLoader.getInstance().destroy();
 	}
 	
 }
