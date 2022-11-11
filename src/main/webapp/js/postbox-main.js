@@ -1,4 +1,4 @@
-import "./postbox-open.js";
+import "./postbox-openEmail.js";
 
 window.addEventListener("load", () => getEntities());
 
