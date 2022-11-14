@@ -44,7 +44,7 @@ public class EmailResponseParser {
 							json.put("content",(String)mp.getBodyPart(i).getContent());
 							json.put("content-type",mp.getBodyPart(i).getContentType());
 						}
-						else if (mp.getBodyPart(i).getContentType().indexOf("octet-stream")>-1) {
+						else {
 							BASE64DecoderStream ds = (BASE64DecoderStream)(mp.getBodyPart(i).getContent());
 							String content = Base64.getEncoder().encodeToString(ds.readAllBytes());
 							json.put("content",content);
