@@ -1,4 +1,4 @@
-async function openEmail (file) {
+async function openEmail (file,subject) {
 
 
 		document.querySelector("#msg").innerHTML = 
@@ -8,6 +8,7 @@ async function openEmail (file) {
 			const response = await fetch ('/postbox/service/postboxEmail?filename='+file);
 			const json = await response.json();
 			
+			let resp = `<p class="text-center"><h2>$subject</h2></p>`;
 			let text;
 			let html;
 			let dwnld = '<div class="row">';
@@ -15,10 +16,10 @@ async function openEmail (file) {
 			json.forEach((item) => {
 				
 				if (item["content-type"].match("text/plain")) {
-					text = item["content"]
+					text = `<p class="text-center">${item["content"]}</p>`; 
 				}
 				else if (item["content-type"].match("text/html")) {
-					html = item["content"]
+					html = `<p class="text-center">${item["content"]}</p>`;
 				}
 				else {
 					var filenameRegex = /name[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
@@ -27,8 +28,8 @@ async function openEmail (file) {
             		if (matches != null && matches[1]) {
             			filename = matches[1].replace(/['"]/g, '');
           			
-            			dwnld += `<div class="col-4">
-            			<a download="${filename}" type="button" class="btn btn-dark btn-lg" href="data:${splitted[0].trim()};base64,${item["content"]}"><i class="bi bi-filetype-xlsx"></i> Download</a>
+            			dwnld += `<div class="col-3">
+            			<a download="${filename}" type="button" class="btn btn-dark btn-lg" href="data:${splitted[0].trim()};base64,${item["content"]}"><i class="bi bi-download"></i> Download</a>
             			</div>`
 
 					}
@@ -36,9 +37,19 @@ async function openEmail (file) {
 			 });
 			 
 			 dwnld += '</div>';
-			 
+			
+			if (html!=null) {
+				resp += html + dwnld;
+			}
+			else if (text!=null) {
+				resp += text + dwnld;
+			}
+			else {
+				resp += dwnld;
+			}
+			
 		     
-	        document.querySelector("#msg").innerHTML = dwnld;
+	        document.querySelector("#msg").innerHTML = resp;
 		  
 };
 
