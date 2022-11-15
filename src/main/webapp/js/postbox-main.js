@@ -22,13 +22,12 @@ async function  getEntities() {
 		const date = new Date(item["insertation_dt"]);
 	    const d = date.toLocaleDateString("de-DE", options);
 
-	    
 		content+= `
 		
 		<a href='#' id='${item["filename"]}'
 		   onclick=`;
 		
-		content+= ' openEmail(this.id,${item["subject"]}) ';
+		content+= ' openEmail(this.id)';
 		
 		content+= ` class="list-group-item list-group-item-action flex-column align-items-start">
 		    <div class="d-flex w-100 justify-content-between">

@@ -1,6 +1,6 @@
-async function openEmail (file,subject) {
+async function openEmail (file) {
 
-
+		console.log(subject);
 		document.querySelector("#msg").innerHTML = 
 		`<div class="spinner-border" role="status">
 		  <span class="sr-only">Loading...</span>
@@ -8,18 +8,18 @@ async function openEmail (file,subject) {
 			const response = await fetch ('/postbox/service/postboxEmail?filename='+file);
 			const json = await response.json();
 			
-			let resp = `<p class="text-center"><h2>$subject</h2></p>`;
+			let resp = `<p class="text-center"><h2>Deine Email</h2></p>`;
 			let text;
 			let html;
 			let dwnld = '<div class="row">';
-			
+		
 			json.forEach((item) => {
 				
 				if (item["content-type"].match("text/plain")) {
-					text = `<p class="text-center">${item["content"]}</p>`; 
+					//text = `<p class="text-center">${item["content"]}</p>`; 
 				}
 				else if (item["content-type"].match("text/html")) {
-					html = `<p class="text-center">${item["content"]}</p>`;
+					//html = `<p class="text-center">${item["content"]}</p>`;
 				}
 				else {
 					var filenameRegex = /name[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
@@ -34,6 +34,7 @@ async function openEmail (file,subject) {
 
 					}
 				}
+
 			 });
 			 
 			 dwnld += '</div>';
