@@ -10,7 +10,7 @@ async function openEmail (file) {
 			
 			let text;
 			let html;
-			let dwnld;
+			let dwnld = '<div class="row">';
 			
 			json.forEach((item) => {
 				
@@ -20,20 +20,23 @@ async function openEmail (file) {
 				else if (item["content-type"].match("text/html")) {
 					html = item["content"]
 				}
-				else if (item["content-type"].match("application/octet-stream")) {
+				else {
 					var filenameRegex = /name[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+					var splitted = item["content-type"].split(";");
 					var matches = filenameRegex.exec(item["content-type"]);
             		if (matches != null && matches[1]) {
             			filename = matches[1].replace(/['"]/g, '');
-            			console.log(filename);
-            			
-            			dwnld = `<a download="${filename}" href="data:application/octet-stream;base64,${item["content"]}">Download</a>`
+          			
+            			dwnld += `<div class="col-4">
+            			<a download="${filename}" type="button" class="btn btn-dark btn-lg" href="data:${splitted[0].trim()};base64,${item["content"]}"><i class="bi bi-filetype-xlsx"></i> Download</a>
+            			</div>`
 
 					}
 				}
-				
-				
 			 });
+			 
+			 dwnld += '</div>';
+			 
 		     
 	        document.querySelector("#msg").innerHTML = dwnld;
 		  
