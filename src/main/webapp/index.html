@@ -13,9 +13,29 @@
 	<body>
 	
 		<div class="container-fluid px-0">
-		  <div id="router-target"></div>
+		  	<div class="list-group">
+        		<div id="result"></div>
+        	</div>
+		</div>
+
+		<div class="modal fade" id="emailModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" id="staticBackdropLabel"><div id="emailModalHeader">Loading</div></h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <div id="emailModalBody"></div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
 		
-		<script src="./js/router.js" type="module"></script>
+		<script src="./js/index-openEmail.js"></script>
+      	<script src="./js/index-main.js" type="module"></script>
 	</body>
 </html>
