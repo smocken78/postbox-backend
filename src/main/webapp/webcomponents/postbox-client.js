@@ -22,15 +22,27 @@ class PostboxClient extends HTMLElement {
     
   }
   
+  async openEmail (file) {
+
+		document.querySelector("#msg").innerHTML = 
+		`<div class="spinner-border" role="status">
+		  <span class="sr-only">Loading...</span>
+		</div>`;
+			const response = await fetch ('/postbox/service/postboxFile?filename='+file);
+			const body = await response.text();
+		     
+	        document.querySelector("#msg").innerHTML = body;
+		  
+	};  
   
   async getEntities() {
 		const response = await fetch (`/postbox/service/postboxEntities`);
 		let files; 
 		let content;
+		let that = this;
 		try {
 			files = await response.json();
-			    content = `<div class="row">
-	  			<div class="col-4">`;
+			    content = `<div class="row">`;
 			const options = { day: "2-digit", month: "2-digit", year: "numeric" };
 			
 			if (files.length == 0) {
@@ -44,13 +56,10 @@ class PostboxClient extends HTMLElement {
 		
 			    
 				content+= `
-				
+				<div class="col-12">
 				<a href='#' id='${item["filename"]}'
-				   onclick=`;
-				
-				content+= " openEmail(this.id) ";
-				
-				content+= ` class="list-group-item list-group-item-action flex-column align-items-start">
+				  @click=${() => that.openEmail(this.id)} 
+				  	class="list-group-item list-group-item-action flex-column align-items-start">
 				    <div class="d-flex w-100 justify-content-between">
 				      <h5 class="mb-1">${item["subject"]}</h5>
 				      <small>${d}</small>
@@ -58,6 +67,7 @@ class PostboxClient extends HTMLElement {
 				    <p class="mb-1">${item["filename"]}</p>
 				    
 				  </a>
+				  </div>
 				  `;
 			
 		    });
@@ -80,19 +90,6 @@ class PostboxClient extends HTMLElement {
 	
 	}
 	
-	async openEmail (file) {
-
-		document.querySelector("#msg").innerHTML = 
-		`<div class="spinner-border" role="status">
-		  <span class="sr-only">Loading...</span>
-		</div>`;
-			const response = await fetch ('/postbox/service/postboxFile?filename='+file);
-			const body = await response.text();
-		     
-	        document.querySelector("#msg").innerHTML = body;
-		  
-	};  
-  
     
   view() {
      return html`

@@ -1,7 +1,11 @@
 async function openEmail (file) {
 		
-		document.querySelector("#emailModal").classList.add("show");
-		document.querySelector("#emailModal").style.display = "block";
+		//document.querySelector("#emailModal").classList.add("show");
+		//document.querySelector("#emailModal").style.display = "block";
+		
+		document.querySelector("#emailModal").classList.add('toggle');
+		document.querySelector("#emailModal").classList.add('show');
+		document.querySelector("#emailModal").style.display = "block"
 		
 		document.querySelector("#emailModalBody").innerHTML = 
 		`<div class="spinner-border" role="status">
