@@ -1,5 +1,8 @@
 async function openEmail (file) {
 		
+		document.querySelector("#emailModal").classList.add("show");
+		document.querySelector("#emailModal").style.display = "block";
+		
 		document.querySelector("#emailModalBody").innerHTML = 
 		`<div class="spinner-border" role="status">
 		  <span class="sr-only">Loading...</span>
@@ -7,7 +10,7 @@ async function openEmail (file) {
 			const response = await fetch ('/postbox/service/postboxEmail?filename='+file);
 			const json = await response.json();
 			
-			document.querySelector("#emailModalBody").innerHTML = `${json["subject"]}`;
+			document.querySelector("#emailModalHeader").innerHTML = `<h1 class="modal-title fs-5" id="staticBackdropLabel">${json["subject"]}</h1>`;
 			
 			let text;
 			let html;
