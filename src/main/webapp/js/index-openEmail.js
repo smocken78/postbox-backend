@@ -1,13 +1,21 @@
 async function openEmail (file) {
-
-		document.querySelector("#msg").innerHTML = 
+		
+		//document.querySelector("#emailModal").classList.add("show");
+		//document.querySelector("#emailModal").style.display = "block";
+		
+		document.querySelector("#emailModal").classList.add('toggle');
+		document.querySelector("#emailModal").classList.add('show');
+		document.querySelector("#emailModal").style.display = "block"
+		
+		document.querySelector("#emailModalBody").innerHTML = 
 		`<div class="spinner-border" role="status">
 		  <span class="sr-only">Loading...</span>
 		</div>`;
 			const response = await fetch ('/postbox/service/postboxEmail?filename='+file);
 			const json = await response.json();
 			
-			let resp = `<p class="text-center"><h2>${json["subject"]}</h2></p>`;
+			document.querySelector("#emailModalHeader").innerHTML = `<h1 class="modal-title fs-5" id="staticBackdropLabel">${json["subject"]}</h1>`;
+			
 			let text;
 			let html;
 			let dwnld = '<div class="row">';
@@ -38,6 +46,7 @@ async function openEmail (file) {
 			 
 			 dwnld += '</div>';
 			
+			let resp;
 			if (html!=null) {
 				resp += html + dwnld;
 			}
@@ -49,7 +58,7 @@ async function openEmail (file) {
 			}
 			
 		     
-	        document.querySelector("#msg").innerHTML = resp;
+	        document.querySelector("#emailModalBody").innerHTML = resp;
 		  
 };
 
