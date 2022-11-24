@@ -59,7 +59,7 @@ class PostboxClient extends HTMLElement {
 				<a href='#' id='${item["filename"]}'
 				  @click=${(event) => {
                  	event.preventDefault();
-                 	this.openEmail(event.target.id);
+                 	this.openEmail(item["filename"]);
                			}} 
                			 class="list-group-item list-group-item-action flex-column align-items-start">
 				    <div class="d-flex w-100 justify-content-between">
