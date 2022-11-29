@@ -1,5 +1,6 @@
 import { html, render } from "../lib/lit-html-module.js";
-
+import { replaceOrCreateTag } from "../lib/utils.js";
+import { PostboxModal } from "./postbox-modal.js"
 
 class PostboxClient extends HTMLElement {
   
@@ -24,34 +25,11 @@ class PostboxClient extends HTMLElement {
   
   async openEmail (file) {
   
-  		let modal = html`
-  		<div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModal" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <div id="emailModalHeader"><h1 class="modal-title fs-5" id="staticBackdropLabel">Loading</h1></div>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      <div class="modal-body">
-		        <div id="emailModalBody"><span class="sr-only">Loading...</span></div>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-  		`;
-  		render(modal,document.querySelector("#body"));
-  		
-		
-		const response = await fetch ('/postbox/service/postboxEmail?filename='+file);
-		const body = await response.text();
-		
-		render(html`<p class="text-center"><h2>${body["subject"]}</h2></p>`,document.querySelector("#emailModalHeader"))
-		     
+  	 const dialog = replaceOrCreateTag("postbox-modal");
+     await document.body.appendChild(dialog);
+     dialog.load('/postbox/service/postboxEmail?filename='+file); 		
 		  
-	};  
+  };  
   
   async getEntities() {
 		const response = await fetch (`/postbox/service/postboxEntities`);
