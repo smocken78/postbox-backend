@@ -19,7 +19,7 @@ import jakarta.mail.internet.MimeMultipart;
 public class EmailProcessor {
 	
 	private Logger logger = LogManager.getLogger(this.getClass());
-	private String notificationHeaderName = ConfigurationHolder3.getConfiguration().getString("postbox.notification.header", "X-Notify");
+	private String notificationHeaderName = ConfigurationHolder3.getConfiguration().getString("postbox.header.notification", "X-Notify");
 	
 	public void run(String fname, String message) {
 		
