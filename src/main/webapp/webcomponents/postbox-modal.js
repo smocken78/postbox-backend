@@ -112,6 +112,8 @@ export class PostboxModal extends HTMLElement {
     
   show_error (error)
   {
+	 document.getElementById("emailModalHeader").innerHTML="Fehler";
+	 document.getElementById("emailModalBody").innerHTML="";
      const div = document.getElementById("loading-error");
      div.innerText = error;
      div.classList.remove("d-none");
