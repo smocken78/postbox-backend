@@ -19,11 +19,10 @@ import jakarta.mail.internet.MimeMultipart;
 public class EmailProcessor {
 	
 	private Logger logger = LogManager.getLogger(this.getClass());
-	private String notificationHeaderName = ConfigurationHolder3.getConfiguration().getString("postbox.notification.header", "X-Notify");
+	private String notificationHeaderName = ConfigurationHolder3.getConfiguration().getString("postbox.header.notification", "X-Notify");
+	private final int DOCUMENT_TYPE_ID = 2;
 	
-	public void run(String fname, String message) {
-		
-		FileMetaData metaData = new FileMetaData(fname, 2);
+	public void run(String message) {
 		
 		try {
 			
@@ -31,6 +30,8 @@ public class EmailProcessor {
 			InputStream is = new ByteArrayInputStream(message.getBytes());
 			MimeMessage mimeMessage = new MimeMessage(s, is);
 			Address [] ias = mimeMessage.getAllRecipients();
+			String filename = "message-" + mimeMessage.getMessageID().replaceAll("<", "").replaceAll(">", "") + "-"+ System.currentTimeMillis() + ".msg";
+			FileMetaData metaData = new FileMetaData(filename, DOCUMENT_TYPE_ID);
 			metaData.setCustomerEmail(ias[0].toString());
 			metaData.setSubject(mimeMessage.getSubject());
 			metaData.setDocumentDateEpochMS(System.currentTimeMillis());
@@ -64,7 +65,7 @@ public class EmailProcessor {
 			}
 			
 			S3PostboxWriter writer = new S3PostboxWriter();
-			writer.saveFile(fname, is);
+			writer.saveFile(filename, is);
 			SQLStatementsPostbox sql = new SQLStatementsPostbox();
 			sql.addEntry(metaData);
 			

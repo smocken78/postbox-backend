@@ -1,7 +1,6 @@
 package org.mocken.servlet.mail;
 
 import java.io.IOException;
-import java.net.URLDecoder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,10 +24,8 @@ public class IncomingEmail extends HttpServlet {
 			String s = request.getParameter("email");
 			if (s!=null) {
 				
-				String fname = "message-" + System.currentTimeMillis() + ".msg";
-				
 				EmailProcessor ep= new EmailProcessor(); 
-				ep.run(fname, URLDecoder.decode( s, "UTF-8"));
+				ep.run(s);
 				
 			}
 			else {
