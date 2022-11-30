@@ -1,7 +1,6 @@
 package org.mocken.servlet.mail;
 
 import java.io.IOException;
-import java.net.URLDecoder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,14 +23,8 @@ public class IncomingEmail extends HttpServlet {
 		try {
 			String s = request.getParameter("email");
 			if (s!=null) {
-				logger.debug(s);
-				logger.debug("####Next decoded####");
-				logger.debug(URLDecoder.decode( s, "UTF-8"));
-				String fname = "message-" + System.currentTimeMillis() + ".msg";
-				
 				EmailProcessor ep= new EmailProcessor(); 
-				ep.run(fname, s);
-				
+				ep.run(s);
 			}
 			else {
 				logger.warn("Called without email....");
