@@ -2,7 +2,7 @@ import { html, render } from "../lib/lit-html-module.js";
 import { Modal } from "../lib/bootstrap.esm.js"
 
 
-class PostboxModal extends HTMLElement {
+export class PostboxModal extends HTMLElement {
   
   constructor() {
     super();
@@ -46,15 +46,15 @@ class PostboxModal extends HTMLElement {
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <div id="emailModalHeader"><h1 class="modal-title fs-5" id="staticBackdropLabel">Loading</h1></div>
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 		      </div>
 		      <div class="modal-body">
 		        <div id="emailModalBody"><span class="sr-only">Loading...</span></div>
+		        <br>
 		        <div id="emailModalDwnld"></div>
 		        <div id="loading-error"></div>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click=${(e) => this.close()}>
+		        <button type="button" class="btn-close" aria-label="Close" @click=${(e) => this.close()}>
 		      </div>
 		    </div>
 		  </div>`;
@@ -64,15 +64,14 @@ class PostboxModal extends HTMLElement {
   {
      try {
         const request = await fetch (urlPath);
-		const data = await response.text();
+		const data = await request.json();
         let textContent;
         let htmlContent;
         let dwnldContent='';
         if (request.status == 200) {
-           document.getElementById("emailModalHeader").value=data.subject;
+           document.getElementById("emailModalHeader").innerHTML=data.subject;
            
            	data["content"].forEach((item) => {
-				console.log(item);
 				if (item["content-type"].match("text/plain")) {
 					textContent = `${item["content"]}`; 
 				}
@@ -84,19 +83,17 @@ class PostboxModal extends HTMLElement {
 					var splitted = item["content-type"].split(";");
 					var matches = filenameRegex.exec(item["content-type"]);
             		if (matches != null && matches[1]) {
-            			filename = matches[1].replace(/['"]/g, '');
-          			
+            			var filename = matches[1].replace(/['"]/g, '');
             			dwnldContent += `<div class="col-3">
             			<a download="${filename}" type="button" class="btn btn-dark btn-lg" href="data:${splitted[0].trim()};base64,${item["content"]}"><i class="bi bi-download"></i> Download</a>
             			</div>`
-
 					}
 				}
 			 });
            
            
-           if (textContent!=null || htmlContent!=null ) document.getElementById("emailModalBody").value=htmlContent!=null?htmlContent:textContent;
-           document.getElementById("emailModalDwnld").value=dwnldContent;
+           if (textContent!=null || htmlContent!=null ) document.getElementById("emailModalBody").innerHTML=htmlContent!=null?htmlContent:textContent;
+           document.getElementById("emailModalDwnld").innerHTML=dwnldContent;
            
         }
         else {

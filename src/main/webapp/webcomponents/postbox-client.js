@@ -24,7 +24,7 @@ class PostboxClient extends HTMLElement {
   }
   
   async openEmail (file) {
-  
+  //PostboxModal;
   	 const dialog = replaceOrCreateTag("postbox-modal");
      await document.body.appendChild(dialog);
      dialog.load('/postbox/service/postboxEmail?filename='+file); 		
