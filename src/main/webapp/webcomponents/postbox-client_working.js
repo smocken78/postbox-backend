@@ -1,6 +1,5 @@
 import { html, render } from "../lib/lit-html-module.js";
-import { replaceOrCreateTag } from "../lib/utils.js";
-import { PostboxModal } from "./postbox-modal.js"
+
 
 class PostboxClient extends HTMLElement {
   
@@ -24,12 +23,17 @@ class PostboxClient extends HTMLElement {
   }
   
   async openEmail (file) {
-  //PostboxModal;
-  	 const dialog = replaceOrCreateTag("postbox-modal");
-     await document.body.appendChild(dialog);
-     dialog.load('/postbox/service/postboxEmail?filename='+file); 		
+		console.log(file);
+		document.querySelector("#msg").innerHTML = 
+		`<div class="spinner-border" role="status">
+		  <span class="sr-only">Loading...</span>
+		</div>`;
+			const response = await fetch ('/postbox/service/postboxFile?filename='+file);
+			const body = await response.text();
+		     
+	        document.querySelector("#msg").innerHTML = body;
 		  
-  };  
+	};  
   
   async getEntities() {
 		const response = await fetch (`/postbox/service/postboxEntities`);

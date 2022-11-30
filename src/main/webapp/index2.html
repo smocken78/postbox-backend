@@ -11,11 +11,31 @@
 	  <title>Postbox</title>
 	</head>
 	<body>
-	
-		<div class="container-fluid px-0">
-		  <div id="router-target"></div>
+		<div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModal" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <div id="emailModalHeader"><h1 class="modal-title fs-5" id="staticBackdropLabel">Loading</h1></div>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <div class="modal-body">
+		        <div id="emailModalBody"></div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		      </div>
+		    </div>
+		  </div>
 		</div>
+		<div class="container-fluid px-0">
+		  	<div class="list-group">
+        		<div id="result"></div>
+        	</div>
+		</div>
+
+
 		
-		<script src="./js/router.js" type="module"></script>
+		<script src="./js/index-openEmail.js"></script>
+      	<script src="./js/index-main.js" type="module"></script>
 	</body>
 </html>
