@@ -34,7 +34,7 @@ public class IncomingEmail extends HttpServlet {
 			}
 			br.close();
 			
-			if (sb.isEmpty()) {
+			if (sb.length() > 0) {
 				EmailProcessor ep= new EmailProcessor(); 
 				ep.run(URLDecoder.decode(sb.toString().startsWith("email=")?sb.toString().replaceFirst("email=", ""):sb.toString(), "UTF-8"));
 				logger.debug("Input processed");
