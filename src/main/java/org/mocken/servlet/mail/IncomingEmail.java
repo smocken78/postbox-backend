@@ -8,6 +8,7 @@ import java.net.URLDecoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mocken.email.EmailProcessor;
+import org.mocken.exception.ConstraintViolationException;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -43,6 +44,9 @@ public class IncomingEmail extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 			}
 
+		}
+		catch (ConstraintViolationException e) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
 		catch (Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
