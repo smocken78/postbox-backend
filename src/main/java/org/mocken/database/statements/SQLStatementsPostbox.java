@@ -127,4 +127,9 @@ public class SQLStatementsPostbox {
 		return isValid;
 	}
 
+	public void removeEntry(FileMetaData metaData) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
