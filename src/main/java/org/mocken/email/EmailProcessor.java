@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.mocken.communication.MailSender;
 import org.mocken.configuration.ConfigurationHolder3;
 import org.mocken.database.statements.SQLStatementsPostbox;
+import org.mocken.exception.ApplicationException;
 import org.mocken.s3.S3PostboxWriter;
 
 import jakarta.mail.Address;
@@ -22,7 +23,7 @@ public class EmailProcessor {
 	private String notificationHeaderName = ConfigurationHolder3.getConfiguration().getString("postbox.header.notification", "X-Notify");
 	private final int DOCUMENT_TYPE_ID = 2;
 	
-	public void run(String message) {
+	public void run(String message) throws Exception {
 		
 		try {
 			
@@ -34,7 +35,7 @@ public class EmailProcessor {
 			FileMetaData metaData = new FileMetaData(filename, DOCUMENT_TYPE_ID);
 			metaData.setCustomerEmail(ias[0].toString());
 			metaData.setSubject(mimeMessage.getSubject());
-			metaData.setDocumentDateEpochMS(System.currentTimeMillis());
+			metaData.setDocumentDateEpochMS(mimeMessage.getReceivedDate()!=null?mimeMessage.getReceivedDate().getTime():System.currentTimeMillis());
 			if (mimeMessage.getContentType().startsWith("text")) {
 				try {
 					metaData.setPreviewContent( ((String)mimeMessage.getContent()).substring(0, 80));
@@ -64,19 +65,32 @@ public class EmailProcessor {
 				is = new ByteArrayInputStream(message.getBytes());
 			}
 			
-			S3PostboxWriter writer = new S3PostboxWriter();
-			writer.saveFile(filename, is);
 			SQLStatementsPostbox sql = new SQLStatementsPostbox();
 			sql.addEntry(metaData);
 			
-			if (mimeMessage.getHeader(notificationHeaderName)!=null &&	Boolean.parseBoolean(mimeMessage.getHeader(notificationHeaderName)[0].trim()))
-			{
-				MailSender email = new MailSender();
-				email.email(ias[0].toString());
+			try {
+				S3PostboxWriter writer = new S3PostboxWriter();
+				writer.saveFile(filename, is);
+			}
+			catch (Exception e) {
+				sql.removeEntry(metaData);
+				throw new ApplicationException("Could not add file to S3");
+			}
+			try {
+				if (mimeMessage.getHeader(notificationHeaderName)!=null &&	Boolean.parseBoolean(mimeMessage.getHeader(notificationHeaderName)[0].trim()))
+				{
+					MailSender email = new MailSender();
+					email.email(ias[0].toString());
+				}				
+			}
+			catch (Exception e) {
+				//ignore
 			}
 		}
 		catch (Exception e) {
 			logger.error("",e);
+			throw new Exception();
+
 		}
 		
 	}

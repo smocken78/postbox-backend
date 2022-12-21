@@ -27,6 +27,29 @@ public class SQLStatementsPostbox {
 		}
 	}
 
+	public void removeEntry(FileMetaData metaData) {
+		if (manager != null) {
+			Connection con = manager.getConnection();
+			try {
+				PreparedStatement ps = con.prepareStatement("delete from postbox_metadata where email= ? and filename = ?");
+				ps.setString(1, metaData.getCustomerEmail());
+				ps.setString(2, metaData.getFilename());
+				ps.execute();
+				ps.close();
+				if (!con.getAutoCommit())
+					con.commit();
+			}
+			
+			catch (Exception e) {
+				logger.error("Something went wrong while removing metadata", e);
+
+			} 
+			finally {
+				manager.closeConnection(con);
+			}
+		}
+	}
+	
 	public void addEntry(FileMetaData metaData) {
 
 			
