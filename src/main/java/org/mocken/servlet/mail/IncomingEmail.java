@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.mocken.email.EmailProcessor;
 import org.mocken.exception.ConstraintViolationException;
 
+import de.congstar.auth.JWTTokenDecoder;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +25,14 @@ public class IncomingEmail extends HttpServlet {
 	
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException 
 	{
+		
+		String user = request.getHeader("user");
+		String token = request.getHeader("token");
+		JWTTokenDecoder decoder = new JWTTokenDecoder();
+		if (!decoder.validate(user, token)) {
+			logger.warn("Unauthorized use of servlet");
+		}
+		
 		try {
 			String line;
 			logger.debug("Start processing input");
