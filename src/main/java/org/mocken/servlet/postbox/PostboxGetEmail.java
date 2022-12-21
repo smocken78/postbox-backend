@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.mocken.database.statements.SQLStatementsPostbox;
 import org.mocken.email.EmailResponseParser;
 import org.mocken.s3.S3PostboxReader;
@@ -40,10 +41,10 @@ public class PostboxGetEmail extends HttpServlet {
     			}
         		
         		EmailResponseParser erp = new EmailResponseParser();
-        		JSONArray jar = erp.parse(s3Object.getObjectContent());
+        		JSONObject json = erp.parse(s3Object.getObjectContent());
     		    response.setHeader("Content-Type","application/json");
     		    PrintWriter wr = response.getWriter();
-        		wr.write(jar.toString());
+        		wr.write(json.toString());
     			wr.close();
     		    
             }

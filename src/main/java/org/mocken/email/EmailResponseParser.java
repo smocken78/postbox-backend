@@ -18,12 +18,15 @@ public class EmailResponseParser {
 	
 	private Logger logger = LogManager.getLogger(this.getClass());
 
-	public JSONArray parse(InputStream is) {
-		
+	public JSONObject parse(InputStream is) {
+		JSONObject response = new JSONObject();
 		JSONArray jar = new JSONArray();
 		try {
 			Session s = Session.getInstance(new Properties());
 			MimeMessage mimeMessage = new MimeMessage(s, is);
+			response.put("subject", mimeMessage.getSubject());
+			response.put("received_date", mimeMessage.getReceivedDate());
+			
 			if (mimeMessage.getContentType().startsWith("text")) {
 				try {
 					JSONObject json = new JSONObject();
@@ -64,8 +67,8 @@ public class EmailResponseParser {
 		catch (Exception e) {
 			logger.error("",e);
 		}
-		
-		return jar;
+		response.put("content", jar);
+		return response;
 	}
 
 }
