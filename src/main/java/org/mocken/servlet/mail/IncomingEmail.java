@@ -7,6 +7,7 @@ import java.net.URLDecoder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mocken.auth.jwt.EmailServiceJWTDecoder;
 import org.mocken.email.EmailProcessor;
 import org.mocken.exception.ConstraintViolationException;
 
@@ -24,7 +25,15 @@ public class IncomingEmail extends HttpServlet {
 	
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException 
 	{
+		
 		try {
+			
+			String user = request.getHeader("user");
+			String token = request.getHeader("token");
+			EmailServiceJWTDecoder decoder = new EmailServiceJWTDecoder();
+			if (!decoder.validate(user, token)) {
+				logger.warn("Unauthorized use of servlet");
+			}
 			
 			String line;
 			logger.debug("Start processing input");
