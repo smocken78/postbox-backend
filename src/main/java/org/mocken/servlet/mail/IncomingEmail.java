@@ -33,6 +33,8 @@ public class IncomingEmail extends HttpServlet {
 			EmailServiceJWTDecoder decoder = new EmailServiceJWTDecoder();
 			if (!decoder.validate(user, token)) {
 				logger.warn("Unauthorized use of servlet");
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+				return;
 			}
 			
 			String line;
