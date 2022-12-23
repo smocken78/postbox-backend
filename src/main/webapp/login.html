@@ -13,8 +13,7 @@
 	<body>
 		<div class="sidenav">
 	         <div class="login-main-text">
-	            <h2>Application<br> Login Page</h2>
-	            <p>Login or register from here to access.</p>
+	            <h2>Commbox<br> Login Page</h2>
 	         </div>
 	      </div>
 	      <div class="main">
@@ -29,11 +28,15 @@
 	                     <label>Password</label>
 	                     <input type="password" class="form-control" placeholder="Password">
 	                  </div>
-	                  <button type="submit" class="btn btn-black">Login</button>
-	                  <button type="submit" class="btn btn-secondary">Register</button>
+	                  <br>
+	                  <button type="submit" class="btn btn-black" onclick="login()">Login</button>
 	               </form>
+	               <br>
+	               <div id="msg"></div>
 	            </div>
 	         </div>
 	      </div>
+	      
+	      <script src="/pbx/js/login.js" type="module"></script>
 	</body>
 </html>
