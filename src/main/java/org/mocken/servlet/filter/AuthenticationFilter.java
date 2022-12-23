@@ -34,6 +34,7 @@ public class AuthenticationFilter implements Filter {
 		add("/postbox/management/info");
 		add("/postbox/api/incomingEMail");
 		add("/postbox/login.html");
+		add("/postbox/index.html");
 	}};
 
 	
@@ -52,7 +53,7 @@ public class AuthenticationFilter implements Filter {
 
 		    String token = request.getHeader("token"); 
 		    
-		    if (token==null)
+		    if (token==null && request.getCookies()!=null)
 			    for (Cookie cookie:request.getCookies()) {
 			    	if (cookie.getName().matches("token"))
 			    		token=cookie.getValue();

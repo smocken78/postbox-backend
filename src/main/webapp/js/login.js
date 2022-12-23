@@ -21,7 +21,8 @@ async function login (user,password) {
 			console.log("Okay");
 		}
 		else {
-		    document.querySelector("#msg").innerHTML = "Das hat nicht funktioniert";
+			console.log("Nöööö");
+		    document.querySelector("#msg").innerHTML = `<div>Das hat nicht funktioniert</div>`;
 		}
 
 		  
