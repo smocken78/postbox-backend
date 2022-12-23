@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
@@ -33,7 +34,6 @@ public class AuthenticationFilter implements Filter {
 		add("/postbox/management/info");
 		add("/postbox/api/incomingEMail");
 		add("/postbox/login.html");
-		add("/postbox/css/*");
 	}};
 
 	
@@ -50,8 +50,15 @@ public class AuthenticationFilter implements Filter {
 		try {
 			logger.debug("Filtering request");
 
-		    String token = request.getHeader("token");
-  
+		    String token = request.getHeader("token"); 
+		    
+		    if (token==null)
+			    for (Cookie cookie:request.getCookies()) {
+			    	if (cookie.getName().matches("token"))
+			    		token=cookie.getValue();
+			    }
+	
+		    	 
 		    //Check for registration and other urls which need to be accessed without token
 		    if (excludedURLs.contains(request.getRequestURI())) {
 		    	chain.doFilter(req, res);
@@ -92,6 +99,10 @@ public class AuthenticationFilter implements Filter {
 		    	
 		    	response.setContentType("application/json");
 		    	response.setStatus(authResponse.getHttpStatus());
+		    	if (authResponse.getHttpStatus()==HttpServletResponse.SC_OK) {
+			    	response.addCookie(new Cookie("token",authResponse.getJson().getString("token")));
+		    	}
+
 				PrintWriter wr = response.getWriter();
 				wr.write(authResponse.getJson().toString());
 				wr.flush();

@@ -40,7 +40,7 @@ public class AuthProvider {
 		JSONObject json = new JSONObject();
 		String email = request.getParameter("email")!=null?request.getParameter("email").trim():null;
 		String password = request.getParameter("password");
-		if (email ==null || password ==null) {
+		if (email==null || password==null) {
 			json.put("status", "FAILED");
 			return new AuthenticationResponse(HttpServletResponse.SC_UNAUTHORIZED,json);
 		}
