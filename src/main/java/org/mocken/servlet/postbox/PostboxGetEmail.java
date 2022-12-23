@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 import org.mocken.database.statements.SQLStatementsPostbox;
 import org.mocken.email.EmailResponseParser;
+import org.mocken.s3.FilePostboxReader;
 import org.mocken.s3.S3PostboxReader;
 import org.mocken.user.User;
 
@@ -31,7 +32,8 @@ public class PostboxGetEmail extends HttpServlet {
         	User user = (User)request.getAttribute("user");
             SQLStatementsPostbox sql = new SQLStatementsPostbox();
             if (filename != null && sql.validateGetFile(user.getEmail(),filename)) {
-            	S3PostboxReader reader = new S3PostboxReader();
+            	//S3PostboxReader reader = new S3PostboxReader();
+            	FilePostboxReader reader = new FilePostboxReader();
             	S3Object s3Object = reader.getFile(filename);
             	
         		if (s3Object == null) {

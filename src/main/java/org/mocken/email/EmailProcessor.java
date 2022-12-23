@@ -11,6 +11,7 @@ import org.mocken.configuration.ConfigurationHolder3;
 import org.mocken.database.statements.SQLStatementsPostbox;
 import org.mocken.exception.ApplicationException;
 import org.mocken.exception.ConstraintViolationException;
+import org.mocken.s3.FilePostboxWriter;
 import org.mocken.s3.S3PostboxWriter;
 
 import jakarta.mail.Address;
@@ -71,7 +72,8 @@ public class EmailProcessor {
 		sql.addEntry(metaData);
 		
 		try {
-			S3PostboxWriter writer = new S3PostboxWriter();
+			//S3PostboxWriter writer = new S3PostboxWriter();
+			FilePostboxWriter writer = new FilePostboxWriter();
 			writer.saveFile(filename, is);
 		}
 		catch (Exception e) {
