@@ -40,14 +40,13 @@ public class AuthProvider {
 		JSONObject json = new JSONObject();
 		String email = request.getParameter("email")!=null?request.getParameter("email").trim():null;
 		String password = request.getParameter("password");
-		String trainer_id = request.getParameter("trainer_id");
-		if (email ==null || password ==null || trainer_id == null) {
+		if (email ==null || password ==null) {
 			json.put("status", "FAILED");
 			return new AuthenticationResponse(HttpServletResponse.SC_UNAUTHORIZED,json);
 		}
 
 		LoginStatements login = new LoginStatements();
-		user = login.validateLoginData(email, password,trainer_id);
+		user = login.validateLoginData(email, password);
 		if (user==null) {
 			json.put("status", "FAILED");
 			return new AuthenticationResponse(HttpServletResponse.SC_UNAUTHORIZED,json);

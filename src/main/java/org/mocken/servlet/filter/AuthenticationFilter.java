@@ -32,6 +32,8 @@ public class AuthenticationFilter implements Filter {
 	{
 		add("/postbox/management/info");
 		add("/postbox/api/incomingEMail");
+		add("/postbox/login.html");
+		add("/postbox/css/*");
 	}};
 
 	
@@ -55,7 +57,7 @@ public class AuthenticationFilter implements Filter {
 		    	chain.doFilter(req, res);
 		    	return;
 		    }
-		    else if (token!=null && !request.getRequestURI().matches("/msports/login")) {
+		    else if (token!=null && !request.getRequestURI().matches("/postbox/login")) {
 		    	AuthProvider auth = new AuthProvider();
 		    	logger.debug("Checking token: " + token);
 		    	try {
@@ -71,7 +73,7 @@ public class AuthenticationFilter implements Filter {
 		    		return;
 				}
 		    }
-		    else if (token==null && !request.getRequestURI().matches("/msports/login")) {
+		    else if (token==null && !request.getRequestURI().matches("/postbox/login")) {
 		    	logger.debug("No token in request");
 		    	response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 		    	return;

@@ -27,18 +27,16 @@ public class LoginStatements {
 	}
 	
 	
-	public User validateLoginData(String email,String password,String trainer_id) {
+	public User validateLoginData(String email,String password) {
 		
 		Connection con = null;
 		User user = null;
 		try {
 			con = cm.getConnection();
-			long coach = Long.parseLong(trainer_id);
 			PreparedStatement ps = con.prepareStatement("select us.*"
 					+ " from users us"
 					+ " where us.email = ?");
 			ps.setString(1, email);
-			ps.setLong(2, coach);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				if (HashGenerator.createSHA1PasswordHash(password).matches(rs.getString("password")) ) {
