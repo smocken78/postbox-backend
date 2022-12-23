@@ -20,7 +20,8 @@ class PostboxLogin extends HTMLElement {
    
   }
   
-  async doLogin() {
+  async doLogin(e) {
+	e.preventDefault();
 	document.getElementById("loginButton").disabled = true;
     var spinner = (html ` 
     	<div class="row g-1 mt-1">
@@ -38,7 +39,7 @@ class PostboxLogin extends HTMLElement {
 	const password = document.getElementById("passwordField").value;
 	
 	const response = await fetch (`/postbox/login?email=${user}&password=${password}`,{
-		method : POST
+		method:'POST'
 	});
 
       
@@ -46,14 +47,14 @@ class PostboxLogin extends HTMLElement {
 		const json = await response.json();
 		
 		console.log(json);	//Wenn der Status 200=ok , dann soll der wobi angezeigt werden
-     
+     	window.location = './#/client'
       
     }
   	else {
 		render(html`Das hat nicht funktioniert....`, document.querySelector("#ausgabe"));		
 	}
 
-	document.getElementById("search_button").disabled = false; 
+	document.getElementById("loginButton").disabled = false; 
   }
   
     
@@ -77,7 +78,7 @@ class PostboxLogin extends HTMLElement {
 	                     <input type="password" class="form-control" id="passwordField" placeholder="Password">
 	                  </div>
 	                  <br>
-	                  <button type="submit" class="btn btn-black" id="loginButton" @click=${() => { this.doLogin(); } }>Login</button>
+	                  <button type="submit" class="btn btn-black" id="loginButton" @click=${(e) => { this.doLogin(e); } }>Login</button>
 	               </form>
 	            </div>
 	            <div id="ausgabe"></div>

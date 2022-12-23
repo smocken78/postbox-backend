@@ -12,7 +12,7 @@ const routes = [
     action: async () => { await import("../webcomponents/postbox-login.js") }
   },
   {
-    path: '/client',
+    path: '/#/client',
     component: 'postbox-client',
     action: async () => { await import("../webcomponents/postbox-client.js") }
   }
