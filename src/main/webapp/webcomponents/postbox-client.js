@@ -62,20 +62,12 @@ class PostboxClient extends HTMLElement {
 				      <h5 class="mb-1">${item["subject"]}</h5>
 				      <small>${d}</small>
 				    </div>
+				    <p class="mb-1">${item["preview"]}</p>
 				    
-				    `;
-				    
-				   if (item["preview"] != null) {
-					  arr.push(html `<p class="mb-1">${item["preview"]}</p>`);
-					}
-					else {
-					  arr.push(html `<p class="mb-1">Keine Vorschau verfügbar.</p>`);
-					
-					}
-					
-					arr.push(html `</a>
-					  </div>
-					 `);
+				  </a>
+				  </div>
+				  `);
+			
 		    });
 		      
 		     arr.push(html `</div>
