@@ -51,10 +51,9 @@ class PostboxLogin extends HTMLElement {
       
     }
   	else {
-		render(html`Das hat nicht funktioniert....`, document.querySelector("#ausgabe"));		
+		render(html`Das hat nicht funktioniert....`, document.querySelector("#ausgabe"));
+		document.getElementById("loginButton").disabled = false; 	
 	}
-
-	document.getElementById("loginButton").disabled = false; 
   }
   
     
