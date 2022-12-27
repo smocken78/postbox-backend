@@ -1,4 +1,4 @@
-package org.mocken.servlet.mail;
+package org.mocken.testing.email;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mocken.testing.email.PostboxTest;
 import org.mocken.user.User;
 
 
