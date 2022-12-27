@@ -49,7 +49,17 @@ export class PostboxModalTestData extends HTMLElement {
 		      </div>
 		      <div class="modal-body">
 		        <div id="emailModalBody">
-		        	
+		        
+				  <form>
+				    <div class="button-group">
+				      <input type="radio" name="button-group" id="send_email" value="Nur Email senden" @click=${(event) => { event.target.checked = true }}>
+				      <label>Nur Email senden</label>
+				      <input type="radio" name="button-group" id="archiv_email" value="Archivieren" @click=${(event) => { event.target.checked = true }}>
+				      <label>Archivieren</label>
+				      <input type="radio" name="button-group"  id="notify_email"  value="Archivieren & Notifizieren" @click=${(event) => { event.target.checked = true }}>
+				      <label>Archivieren & Notifizieren</label>
+				    </div>
+				  </form>		        
 		        </div>
 		        <br>
 		        <div id="emailModalBtn">
@@ -66,6 +76,7 @@ export class PostboxModalTestData extends HTMLElement {
    async sendEmail ()
   {
      try {
+		console.log(document.querySelector("#notify_email").checked);
         const request = await fetch ("/service/addTestEmail");
 
         if (request.status == 200) {
