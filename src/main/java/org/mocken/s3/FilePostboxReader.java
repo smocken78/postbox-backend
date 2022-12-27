@@ -1,5 +1,6 @@
 package org.mocken.s3;
 
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
@@ -28,7 +29,9 @@ public class FilePostboxReader {
         metadata.setContentLength(fis.available());
         s3object = new S3Object();
         s3object.setObjectMetadata(metadata);
-        s3object.setObjectContent(fis);
+        if (fis.markSupported())
+        	fis.reset();
+        s3object.setObjectContent(new ByteArrayInputStream(fis.readAllBytes()));
         fis.close();
 		return s3object;
 

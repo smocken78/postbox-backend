@@ -62,7 +62,7 @@ class PostboxClient extends HTMLElement {
 				      <h5 class="mb-1">${item["subject"]}</h5>
 				      <small>${d}</small>
 				    </div>
-				    <p class="mb-1">${item["filename"]}</p>
+				    <p class="mb-1">${item["preview"]}</p>
 				    
 				  </a>
 				  </div>
