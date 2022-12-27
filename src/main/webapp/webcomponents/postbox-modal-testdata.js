@@ -48,7 +48,7 @@ export class PostboxModalTestData extends HTMLElement {
 		        <div id="emailModalHeader"><h1 class="modal-title fs-5" id="staticBackdropLabel">Test Email generieren</h1></div>
 		      </div>
 		      <div class="modal-body">
-		        <div id="emailModalBody"
+		        <div id="emailModalBody">
 		        	
 		        </div>
 		        <br>
@@ -69,8 +69,8 @@ export class PostboxModalTestData extends HTMLElement {
         const request = await fetch ("/service/addTestEmail");
 
         if (request.status == 200) {
-           document.getElementById("emailModalBody").innerHTML="Email versendet";
-           document.getElementById("emailModalBtn").innerHTML="";
+		   render(html`Email versendet`,document.querySelector("#emailModalHeader"));
+		   render(html``,document.querySelector("#emailModalBtn"));
            
         }
         else {
@@ -89,12 +89,10 @@ export class PostboxModalTestData extends HTMLElement {
     
   show_error (error)
   {
-     document.getElementById("emailModalHeader").innerHTML="Fehler";
-     document.getElementById("emailModalBody").innerHTML="";
-     document.getElementById("emailModalBtn").innerHTML="";
-     const div = document.getElementById("loading-error");
-     div.innerText = error;
-     div.classList.remove("d-none");
+	console.log(error);
+	render(html`Fehler`,document.querySelector("#emailModalHeader"));
+	render(html`Das hat nicht funktioniert`,document.querySelector("#emailModalBody"));
+    render(html``,document.querySelector("#emailModalBtn"));
   }
 	
 }
