@@ -1,6 +1,7 @@
 import { html, render } from "../lib/lit-html-module.js";
 import { replaceOrCreateTag } from "../lib/utils.js";
 import { PostboxModal } from "./postbox-modal.js"
+import { PostboxModalTestData } from "./postbox-modal-testdata.js"
 
 class PostboxClient extends HTMLElement {
   
@@ -22,6 +23,12 @@ class PostboxClient extends HTMLElement {
     this.getEntities();
     
   }
+  
+  async addTestData () {
+  //PostboxModal;
+  	 const dialog = replaceOrCreateTag("postbox-modal-testdata");
+     await document.body.appendChild(dialog);
+  };    
   
   async openEmail (file) {
   //PostboxModal;
@@ -94,16 +101,15 @@ class PostboxClient extends HTMLElement {
 	
 	}
 	
-    
   view() {
      return html`
      
      <div class="header row g-1 mt-1" id="header">
-        <div class="col-md-7">
+        <div class="col-md-10">
           <h1>Deine Postbox</h1>
         </div>  
-        <div class="col-md-5">
-           <button id="addTestData" type="button" class="btn btn-lg mb-3 w-100 text-uppercase" style="background-color:#E95D0F;" @click=${() => { console.log("Add Test Data") } }> <span id="execute-spinner" role="status" class="spinner-border-sm"></span>Add Testdata</button>
+        <div class="col-md-2">
+           <button id="addTestData" type="button" class="btn btn-lg mb-3 w-100 text-uppercase" style="background-color:#E95D0F;" @click=${(e) => {e.preventDefault(); this.addTestData(); } }> <span id="execute-spinner" role="status" class="spinner-border-sm"></span>Add Testdata</button>
         </div>  
      </div>
      <br>
