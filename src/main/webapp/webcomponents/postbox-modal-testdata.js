@@ -86,6 +86,7 @@ export class PostboxModalTestData extends HTMLElement {
 
         if (request.status == 200) {
 		   render(html`Email versendet`,document.querySelector("#emailModalHeader"));
+		   render(html`Du kannst diese Seite jetzt schließen und die Haupseite neuladen`,document.querySelector("#emailModalBody"));
 		   render(html``,document.querySelector("#emailModalBtn"));
            
         }
