@@ -21,7 +21,7 @@ import jakarta.mail.internet.MimeMultipart;
 
 
 public class PostboxTest {
-	private String sender = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.sender", "no-reply@congstar.net");
+	private String sender = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.sender", "no-reply@exampe.com");
 	private String smtpHost = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.smtp.host", "172.25.0.14");
 	private String smtpTLS = ConfigurationHolder3.getConfiguration().getString("appconfig.mail.smtp.starttls.enable","false");
 	private int smtpPort = ConfigurationHolder3.getConfiguration().getInt("appconfig.mail.smtp.port",2501);
