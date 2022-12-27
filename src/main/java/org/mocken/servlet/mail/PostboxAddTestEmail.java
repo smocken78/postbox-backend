@@ -1,4 +1,4 @@
-package org.mocken.servlet.postbox;
+package org.mocken.servlet.mail;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
