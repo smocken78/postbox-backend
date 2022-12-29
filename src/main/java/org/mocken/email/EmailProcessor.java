@@ -35,6 +35,7 @@ public class EmailProcessor {
 		metaData.setCustomerEmail(ias[0].toString());
 		metaData.setSubject(mimeMessage.getSubject());
 		metaData.setDocumentDateEpochMS(mimeMessage.getReceivedDate()!=null?mimeMessage.getReceivedDate().getTime():System.currentTimeMillis());
+		metaData.setDefaultDeletionEpochMS(System.currentTimeMillis()+30*86400000L);
 		if (mimeMessage.getContentType().indexOf("text")>-1) {
 			try {
 				logger.debug("Setting preview content to: {}",((String)mimeMessage.getContent()).substring(0, 80));
