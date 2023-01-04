@@ -89,7 +89,7 @@ public class SQLStatementsPostbox {
 				
 				PreparedStatement ps;
 				if (pageSize!=null && pageSize.matches("\\d+") && pageNumber!=null && pageNumber.matches("\\d+"))
-					ps = con.prepareStatement("select * from postbox_metadata where email = ? order by insertation_dt desc limit ?.?");
+					ps = con.prepareStatement("select * from postbox_metadata where email = ? order by insertation_dt desc limit ?,?");
 				else
 					ps = con.prepareStatement("select * from postbox_metadata where email = ? order by insertation_dt desc");
 				
