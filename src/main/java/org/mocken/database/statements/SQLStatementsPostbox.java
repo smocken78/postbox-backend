@@ -79,16 +79,25 @@ public class SQLStatementsPostbox {
 		}
 	}
 	
-	public JSONArray getEntries(String email) {
+	public JSONArray getEntries(String email, String pageNumber, String pageSize) {
 
 		JSONArray jar = new JSONArray();
 		
 		if (manager != null) {
 			Connection con = manager.getConnection();
 			try {
-
-				PreparedStatement ps = con.prepareStatement("select * from postbox_metadata where email = ? order by insertation_dt desc");
+				
+				PreparedStatement ps;
+				if (pageSize!=null && pageSize.matches("\\d+") && pageNumber!=null && pageNumber.matches("\\d+"))
+					ps = con.prepareStatement("select * from postbox_metadata where email = ? order by insertation_dt desc limit ?.?");
+				else
+					ps = con.prepareStatement("select * from postbox_metadata where email = ? order by insertation_dt desc");
+				
 				ps.setString(1, email.trim());
+				if (pageSize!=null && pageSize.matches("\\d+") && pageNumber!=null && pageNumber.matches("\\d+")) {
+					ps.setInt(2, Integer.parseInt(pageNumber)*Integer.parseInt(pageSize));
+					ps.setInt(3, Integer.parseInt(pageSize));
+				}
 				ResultSet rs = ps.executeQuery();
 				while (rs.next()) {
 					JSONObject json = new JSONObject();

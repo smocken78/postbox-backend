@@ -24,8 +24,11 @@ public class PostboxGetEntities extends HttpServlet {
         try {
 
         	User user = (User)request.getAttribute("user");
+			String pageSize = request.getParameter("pageSize");
+			String pageNumber = request.getParameter("pageNumber");
             SQLStatementsPostbox sql = new SQLStatementsPostbox();
-            JSONArray jar = sql.getEntries(user.getEmail());
+            
+            JSONArray jar = sql.getEntries(user.getEmail(),pageNumber,pageSize);
                 
             PrintWriter wr = response.getWriter();
             wr.write(jar.toString());
